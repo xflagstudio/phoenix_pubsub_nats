@@ -14,6 +14,7 @@ defmodule Phoenix.PubSub.NatsConn do
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
   end
+
   def start_link(opts, name) do
     GenServer.start_link(__MODULE__, opts, name: name)
   end
@@ -37,6 +38,7 @@ defmodule Phoenix.PubSub.NatsConn do
     case Gnat.start_link(state.opts) do
       {:ok, pid} ->
         {:noreply, %{state | conn: pid, status: :connected}}
+
       {:error, _reason} ->
         :timer.send_after(@reconnect_after_ms, :connect)
         {:noreply, state}
@@ -44,7 +46,7 @@ defmodule Phoenix.PubSub.NatsConn do
   end
 
   def handle_info({:EXIT, _ref, _reason}, %{conn: _pid, status: :connected} = state) do
-    Logger.error "lost Nats connection. Attempting to reconnect..."
+    Logger.error("lost Nats connection. Attempting to reconnect...")
     :timer.send_after(@reconnect_after_ms, :connect)
     {:noreply, %{state | conn: nil, status: :disconnected}}
   end
@@ -56,6 +58,7 @@ defmodule Phoenix.PubSub.NatsConn do
       _, _ -> :ok
     end
   end
+
   def terminate(_reason, _state) do
     :ok
   end
