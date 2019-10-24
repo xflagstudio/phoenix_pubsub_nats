@@ -9,17 +9,8 @@ Add `phoenix_pubsub_nats` as a dependency in your `mix.exs` file.
 
 ```elixir
 def deps do
-  [{:phoenix_pubsub_nats, git: "https://github.com/mtokioka/phoenix_pubsub_nats.git"}]
+  [{:phoenix_pubsub_nats, git: "https://github.com/xflagstudio/phoenix_pubsub_nats.git"}]
 end
-```
-
-You should also update your application list to include `:phoenix_pubsub_nats`:
-
-```elixir
-def application do
-  [applications: [:phoenix_pubsub_nats]]
-end
-
 ```
 
 Edit your Phoenix application Endpoint configuration:
@@ -50,4 +41,3 @@ The following options are supported:
     {:noreply, socket}
   end
 ```
-

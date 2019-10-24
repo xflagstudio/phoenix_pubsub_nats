@@ -8,7 +8,7 @@ defmodule Phoenix.PubSub.Nats.Mixfile do
       elixir: "~> 1.6",
       description: description(),
       package: package(),
-      source_url: "https://github.com/mtokioka/phoenix_pubsub_nats",
+      source_url: "https://github.com/xflagstudio/phoenix_pubsub_nats",
       deps: deps(),
       docs: [readme: "README.md", main: "README"]
     ]
@@ -38,7 +38,7 @@ defmodule Phoenix.PubSub.Nats.Mixfile do
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
       contributors: ["Masahiro Tokioka"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/mtokioka/phoenix_pubsub_nats"}
+      links: %{"GitHub" => "https://github.com/xflagstudio/phoenix_pubsub_nats"}
     ]
   end
 end
