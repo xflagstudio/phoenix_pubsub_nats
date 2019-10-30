@@ -17,13 +17,14 @@ defmodule Phoenix.PubSub.NatsConsumer do
     if link, do: Process.link(pid)
 
     case Nats.with_conn(conn_pool, fn conn ->
-          {:ok, ref} = Gnat.sub(conn, self(), topic)
-          Process.monitor(conn)
-          Process.monitor(pid)
-          {:ok, conn, ref}
-        end) do
+           {:ok, ref} = Gnat.sub(conn, self(), topic)
+           Process.monitor(conn)
+           Process.monitor(pid)
+           {:ok, conn, ref}
+         end) do
       {:ok, conn, ref} ->
         {:ok, %{conn: conn, pid: pid, sub_ref: ref, node_ref: node_ref}}
+
       {:error, :disconnected} ->
         {:stop, :disconnected}
     end
@@ -40,9 +41,11 @@ defmodule Phoenix.PubSub.NatsConsumer do
 
   def handle_info({:msg, %{body: payload, topic: _, reply_to: _}}, state) do
     {remote_node_ref, from_pid, msg} = :erlang.binary_to_term(payload)
+
     if from_pid == :none or remote_node_ref != state.node_ref or from_pid != state.pid do
       send(state.pid, msg)
     end
+
     {:noreply, state}
   end
 
@@ -62,5 +65,4 @@ defmodule Phoenix.PubSub.NatsConsumer do
       _, _ -> :ok
     end
   end
-
 end
